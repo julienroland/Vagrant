@@ -122,7 +122,7 @@ cat <<EOF
         listen 80;
 
         root $DocumentRoot/public;
-         index index.php index.html index.htm;
+        index index.php index.html index.htm;
 
         # Make site accessible from ...
         server_name $ServerName;
