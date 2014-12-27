@@ -16,7 +16,7 @@ echo ">>> Installing Nginx"
 [[ -z $1 ]] && { echo "!!! IP address not set. Check the Vagrant file."; exit 1; }
 
 if [[ -z $2 ]]; then
-    public_folder="/vagrant"
+    public_folder="/vagrant/public"
 else
     public_folder="$2"
 fi
@@ -39,7 +39,7 @@ if [[ -z $5 ]]; then
 else
     dogstudio_url="$5"
 fi
-echo $dogstudio_url
+echo "Repo use >>>" $dogstudio_url
 # Add repo for latest stable nginx
 sudo add-apt-repository -y ppa:nginx/stable
 
@@ -64,7 +64,7 @@ usermod -a -G www-data vagrant
 # Nginx enabling and disabling virtual hosts
 curl --silent -L $github_url/helpers/ngxen.sh > ngxen
 curl --silent -L $github_url/helpers/ngxdis.sh > ngxdis
-curl  -L $dogstudio_url/vagrant/nginx/ngxcb.sh > ngxcb
+curl --silent -L $dogstudio_url/vagrant/nginx/ngxcb.sh > ngxcb
 # curl --silent -L $github_url/helpers/ngxcb.sh > ngxcb
 sudo chmod guo+x ngxen ngxdis ngxcb
 sudo mv ngxen ngxdis ngxcb /usr/local/bin
