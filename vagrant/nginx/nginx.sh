@@ -37,9 +37,9 @@ fi
 if [[ -z $5 ]]; then
     dogstudio_url="https://raw.githubusercontent.com/julienroland/Vagrant/master"
 else
-    dogstudio_url="$4"
+    dogstudio_url="$5"
 fi
-
+echo $dogstudio_url
 # Add repo for latest stable nginx
 sudo add-apt-repository -y ppa:nginx/stable
 
@@ -64,7 +64,7 @@ usermod -a -G www-data vagrant
 # Nginx enabling and disabling virtual hosts
 curl --silent -L $github_url/helpers/ngxen.sh > ngxen
 curl --silent -L $github_url/helpers/ngxdis.sh > ngxdis
-curl --silent -L $dogstudio_url/vagrant/nginx/ngxcb.sh > ngxcb
+curl  -L $dogstudio_url/vagrant/nginx/ngxcb.sh > ngxcb
 # curl --silent -L $github_url/helpers/ngxcb.sh > ngxcb
 sudo chmod guo+x ngxen ngxdis ngxcb
 sudo mv ngxen ngxdis ngxcb /usr/local/bin
