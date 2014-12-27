@@ -121,7 +121,7 @@ cat <<EOF
     server {
         listen 80;
 
-        root $DocumentRoot;
+        root $DocumentRoot/public;
          index index.php index.html index.htm;
 
         # Make site accessible from ...
@@ -158,7 +158,7 @@ cat <<EOF
         ssl_certificate     /etc/ssl/xip.io/xip.io.crt;
         ssl_certificate_key /etc/ssl/xip.io/xip.io.key;
 
-        root $DocumentRoot;
+        root $DocumentRoot/public;
         index index.php index.html index.htm;
 
         # Make site accessible from ...
