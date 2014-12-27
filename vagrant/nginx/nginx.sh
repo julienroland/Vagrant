@@ -70,6 +70,7 @@ curl --silent -L $dogstudio_url/vagrant/nginx/ngxcb.sh > ngxcb
 sudo chmod guo+x ngxen ngxdis ngxcb
 sudo mv ngxen ngxdis ngxcb /usr/local/bin
 
+
 # Create Nginx Server Block named "vagrant" and enable it
 sudo ngxcb -d $public_folder -s "$1.xip.io$hostname" -e
 
