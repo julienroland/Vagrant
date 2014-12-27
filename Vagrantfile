@@ -18,6 +18,12 @@ github_repo     = "Vaprobash"
 github_branch   = "1.1.0"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
+# Config Dogstudio Github Settings
+dogstudio_project  = "emulsion"
+dogstudio_repo     = "vagrant"
+dogstudio_branch   = "master"
+dogstudio_url      = "http://gitlab.dogstudio.be:800/#{dogstudio_project}/#{dogstudio_repo}/raw/#{dogstudio_branch}"
+
 # Set a local private network IP address.
 # See http://en.wikipedia.org/wiki/Private_network for explanation
 # You can use the following IP ranges:
@@ -47,8 +53,8 @@ php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
 ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)
 ruby_gems             = [        # List any Ruby Gems that you want to install
   #"jekyll",
-  #"sass",
-  #"compass",
+  "sass",
+  "compass",
 ]
 
 # To install HHVM instead of PHP, set this to "true"
@@ -56,7 +62,7 @@ hhvm                  = "false"
 
 # PHP Options
 composer_packages     = [        # List any global Composer packages that you want to install
-  #"phpunit/phpunit:4.0.*",
+  "phpunit/phpunit:4.0.*",
   #"codeception/codeception=*",
   #"phpspec/phpspec:2.0.*@dev",
   #"squizlabs/php_codesniffer:1.5.*",
@@ -65,7 +71,7 @@ composer_packages     = [        # List any global Composer packages that you wa
 # Default web server document root
 # Symfony's public directory is assumed "web"
 # Laravel's public directory is assumed "public"
-public_folder         = "/vagrant"
+public_folder         = "/vagrant/public"
 
 laravel_root_folder   = "/vagrant/laravel" # Where to install Laravel. Will `composer install` if a composer.json file exists
 laravel_version       = "latest-stable" # If you need a specific version of Laravel, set it here
@@ -74,9 +80,9 @@ symfony_root_folder   = "/vagrant/symfony" # Where to install Symfony.
 nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
 nodejs_packages       = [          # List any global NodeJS packages that you want to install
   #"grunt-cli",
-  #"gulp",
-  #"bower",
-  #"yo",
+  "gulp",
+  "bower",
+  "yo",
 ]
 
 Vagrant.configure("2") do |config|
@@ -164,13 +170,13 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
 
   # Provision PHP
-  config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, hhvm]
+  config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/scripts/php.sh", args: [php_timezone, hhvm]
 
   # Enable MSSQL for PHP
   # config.vm.provision "shell", path: "#{github_url}/scripts/mssql.sh"
 
   # Provision Vim
-  # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
+  config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
 
 
   ####
@@ -182,7 +188,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "./vagrant/apache.sh", args: [server_ip, public_folder, hostname, github_url]
 
   # Provision Nginx Base
-   config.vm.provision "shell", path: "./vagrant/nginx.sh", args: [server_ip, public_folder, hostname, github_url]
+   config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/nginx/nginx.sh", args: [server_ip, public_folder, hostname, github_url]
 
 
   ####
@@ -190,7 +196,7 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision MySQL
-  config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
+  config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
   # Provision PostgreSQL
   # config.vm.provision "shell", path: "#{github_url}/scripts/pgsql.sh", args: pgsql_root_password
