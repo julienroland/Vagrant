@@ -27,6 +27,14 @@ else
     github_url="$4"
 fi
 
+if [[ -z $5 ]]; then
+    dogstudio_url="https://raw.githubusercontent.com/julienroland/Vagrant/master"
+else
+    dogstudio_url="$5"
+fi
+
+echo "Repo use >>>" $dogstudio_url
+
 # Install Apache
 # -qq implies -y --force-yes
 sudo apt-get install -y apache2

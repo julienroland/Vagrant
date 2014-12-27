@@ -19,10 +19,15 @@ github_branch   = "1.1.0"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
 # Config Dogstudio Github Settings
-dogstudio_project  = "emulsion"
-dogstudio_repo     = "vagrant"
+#dogstudio_project  = "emulsion"
+#dogstudio_repo     = "vagrant"
+#dogstudio_branch   = "master"
+#dogstudio_url      = "http://gitlab.dogstudio.be:800/#{dogstudio_project}/#{dogstudio_repo}/raw/#{dogstudio_branch}"
+
+dogstudio_project  = "julienroland"
+dogstudio_repo     = "Vagrant"
 dogstudio_branch   = "master"
-dogstudio_url      = "http://gitlab.dogstudio.be:800/#{dogstudio_project}/#{dogstudio_repo}/raw/#{dogstudio_branch}"
+dogstudio_url      = "https://raw.githubusercontent.com/#{dogstudio_project}/#{dogstudio_repo}/#{dogstudio_branch}"
 
 # Set a local private network IP address.
 # See http://en.wikipedia.org/wiki/Private_network for explanation
@@ -71,7 +76,7 @@ composer_packages     = [        # List any global Composer packages that you wa
 # Default web server document root
 # Symfony's public directory is assumed "web"
 # Laravel's public directory is assumed "public"
-public_folder         = "/vagrant/public"
+public_folder         = "/vagrant"
 
 laravel_root_folder   = "/vagrant/laravel" # Where to install Laravel. Will `composer install` if a composer.json file exists
 laravel_version       = "latest-stable" # If you need a specific version of Laravel, set it here
@@ -170,15 +175,13 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
 
   # Provision PHP
-  config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, hhvm]
+  config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/scripts/php.sh", args: [php_timezone, hhvm]
 
-  # Enable MSSQL for PHP
+  # Enable MSS for PHP
   # config.vm.provision "shell", path: "#{github_url}/scripts/mssql.sh"
 
   # Provision Vim
   # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
-
-
   ####
   # Web Servers
   ##########
