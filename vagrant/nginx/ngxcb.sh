@@ -198,7 +198,7 @@ fi
 
 # The default for the optional argument's:
 ServerBlockName="vagrant"
-EnableServerBlock=0
+EnableServerBlock=1
 NeedsReload=0
 ForceOverwrite=0
 
