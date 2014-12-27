@@ -253,7 +253,6 @@ fi
 
 # Create the Server Block config
 create_server_block > /etc/nginx/sites-available/${ServerBlockName}
-echo "TEST TO NGXEN"
 sudo ngxen  ${ServerBlockName}
 # Enable the Server Block and reload Nginx
 if [[ $EnableServerBlock -eq 1 ]]; then
