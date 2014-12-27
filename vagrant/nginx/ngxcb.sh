@@ -132,7 +132,7 @@ cat <<EOF
 
         charset utf-8;
 
-         # Laravel rewrite
+        # Laravel rewrite
         try_files \$uri \$uri/ @rewrite;
         location @rewrite {
             rewrite ^/(.*)$ /index.php?_url=/\$1;
@@ -173,6 +173,7 @@ cat <<EOF
         try_files \$uri \$uri/ @rewrite;
         location @rewrite {
             rewrite ^/(.*)$ /index.php?_url=/\$1;
+        }
 
         location = /favicon.ico { log_not_found off; access_log off; }
         location = /robots.txt  { access_log off; log_not_found off; }

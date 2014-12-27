@@ -16,7 +16,7 @@ echo ">>> Installing Nginx"
 [[ -z $1 ]] && { echo "!!! IP address not set. Check the Vagrant file."; exit 1; }
 
 if [[ -z $2 ]]; then
-    public_folder="/vagrant/public"
+    public_folder="/vagrant"
 else
     public_folder="$2"
 fi
