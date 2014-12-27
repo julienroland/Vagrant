@@ -188,7 +188,7 @@ Vagrant.configure("2") do |config|
 
   # Provision Apache Base
 
-  # config.vm.provision "shell", path: "./vagrant/apache.sh", args: [server_ip, public_folder, hostname, github_url]
+  # config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/nginx/apache.sh", args: [server_ip, public_folder, hostname, github_url, dogstudio_url]
 
   # Provision Nginx Base
    config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/nginx/nginx.sh", args: [server_ip, public_folder, hostname, github_url, dogstudio_url]
@@ -199,7 +199,7 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision MySQL
-  config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
+  config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
   # Provision PostgreSQL
   # config.vm.provision "shell", path: "#{github_url}/scripts/pgsql.sh", args: pgsql_root_password
