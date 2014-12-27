@@ -131,15 +131,13 @@ cat <<EOF
         error_log  /var/log/nginx/vagrant.com-error.log error;
 
         charset utf-8;
-EOF
-read -d '' PHP_WITH_SSL <<EOF
+
          # Laravel rewrite
-        try_files $uri $uri/ @rewrite;
+        try_files \$uri \$uri/ @rewrite;
         location @rewrite {
-            rewrite ^/(.*)$ /index.php?_url=/$1;
+            rewrite ^/(.*)$ /index.php?_url=/\$1;
         }
-EOF
-cat <<EOF
+
         location = /favicon.ico { log_not_found off; access_log off; }
         location = /robots.txt  { access_log off; log_not_found off; }
 
@@ -170,15 +168,12 @@ cat <<EOF
         error_log  /var/log/nginx/vagrant.com-error.log error;
 
         charset utf-8;
-EOF
-read -d '' PHP_WITH_SSL <<EOF
+
         # Laravel rewrite
-        try_files $uri $uri/ @rewrite;
+        try_files \$uri \$uri/ @rewrite;
         location @rewrite {
-            rewrite ^/(.*)$ /index.php?_url=/$1;
-        }
-EOF
-cat <<EOF
+            rewrite ^/(.*)$ /index.php?_url=/\$1;
+
         location = /favicon.ico { log_not_found off; access_log off; }
         location = /robots.txt  { access_log off; log_not_found off; }
 
