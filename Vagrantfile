@@ -1,15 +1,8 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
 
 # Server Configuration
 hostname      = "dog.dev"
 server_name   = "debian76-dogCMS"
 server_ip       = "172.135.52.20"
-
-
-# =======================
-# Dont touch anything below this
-# =======================
 
 
 # Config Github Settings
@@ -28,13 +21,6 @@ dogstudio_project  = "julienroland"
 dogstudio_repo     = "Vagrant"
 dogstudio_branch   = "master"
 dogstudio_url      = "https://raw.githubusercontent.com/#{dogstudio_project}/#{dogstudio_repo}/#{dogstudio_branch}"
-
-# Set a local private network IP address.
-# See http://en.wikipedia.org/wiki/Private_network for explanation
-# You can use the following IP ranges:
-#   10.0.0.1    - 10.255.255.254
-#   172.16.0.1  - 172.31.255.254
-#   192.168.0.1 - 192.168.255.254
 
 server_memory         = "512" # MB
 server_swap           = "768" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
@@ -65,22 +51,11 @@ ruby_gems             = [        # List any Ruby Gems that you want to install
 # To install HHVM instead of PHP, set this to "true"
 hhvm                  = "false"
 
-# PHP Options
-composer_packages     = [        # List any global Composer packages that you want to install
-  #"phpunit/phpunit:4.0.*",
-  #"codeception/codeception=*",
-  #"phpspec/phpspec:2.0.*@dev",
-  #"squizlabs/php_codesniffer:1.5.*",
-]
 
 # Default web server document root
 # Symfony's public directory is assumed "web"
 # Laravel's public directory is assumed "public"
 public_folder         = "/vagrant"
-
-laravel_root_folder   = "/vagrant/laravel" # Where to install Laravel. Will `composer install` if a composer.json file exists
-laravel_version       = "latest-stable" # If you need a specific version of Laravel, set it here
-symfony_root_folder   = "/vagrant/symfony" # Where to install Symfony.
 
 nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
 nodejs_packages       = [          # List any global NodeJS packages that you want to install
@@ -126,10 +101,6 @@ Vagrant.configure("2") do |config|
     # to sleep for instance, then some 3rd party services will reject requests.
     vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
 
-    # Prevent VMs running on Ubuntu to lose internet connection
-    # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    # vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-
   end
 
   # If using VMWare Fusion
@@ -154,19 +125,6 @@ Vagrant.configure("2") do |config|
     }
   end
 
-  # Adding vagrant-digitalocean provider - https://github.com/smdahlen/vagrant-digitalocean
-  # Needs to ensure that the vagrant plugin is installed
-  # config.vm.provider :digital_ocean do |provider, override|
-  #   override.ssh.private_key_path = '~/.ssh/id_rsa'
-  #   override.vm.box = 'digital_ocean'
-  #   override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-
-  #   provider.token = 'YOUR TOKEN'
-  #     provider.image = 'Ubuntu 14.04 x64'
-  #     provider.region = 'nyc2'
-  #     provider.size = '512mb'
-  #   end
-
   ####
   # Base Items
   ##########
@@ -177,17 +135,11 @@ Vagrant.configure("2") do |config|
   # Provision PHP
   config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/scripts/php.sh", args: [php_timezone, hhvm]
 
-  # Enable MSS for PHP
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mssql.sh"
-
-  # Provision Vim
-  # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
   ####
   # Web Servers
   ##########
 
   # Provision Apache Base
-
   # config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/nginx/apache.sh", args: [server_ip, public_folder, hostname, github_url, dogstudio_url]
 
   # Provision Nginx Base
@@ -201,87 +153,6 @@ Vagrant.configure("2") do |config|
   # Provision MySQL
   config.vm.provision "shell", path: "#{dogstudio_url}/vagrant/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
-  # Provision PostgreSQL
-  # config.vm.provision "shell", path: "#{github_url}/scripts/pgsql.sh", args: pgsql_root_password
-
-  # Provision SQLite
-  # config.vm.provision "shell", path: "#{github_url}/scripts/sqlite.sh"
-
-  # Provision RethinkDB
-  # config.vm.provision "shell", path: "#{github_url}/scripts/rethinkdb.sh", args: pgsql_root_password
-
-  # Provision Couchbase
-  # config.vm.provision "shell", path: "#{github_url}/scripts/couchbase.sh"
-
-  # Provision CouchDB
-  # config.vm.provision "shell", path: "#{github_url}/scripts/couchdb.sh"
-
-  # Provision MongoDB
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mongodb.sh", args: mongo_enable_remote
-
-  # Provision MariaDB
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mariadb.sh", args: [mysql_root_password, mysql_enable_remote]
-
-  ####
-  # Search Servers
-  ##########
-
-  # Install Elasticsearch
-  # config.vm.provision "shell", path: "#{github_url}/scripts/elasticsearch.sh"
-
-  # Install SphinxSearch
-  # config.vm.provision "shell", path: "#{github_url}/scripts/sphinxsearch.sh"
-
-  ####
-  # Search Server Administration (web-based)
-  ##########
-
-  # Install ElasticHQ
-  # Admin for: Elasticsearch
-  # Works on: Apache2, Nginx
-  # config.vm.provision "shell", path: "#{github_url}/scripts/elastichq.sh"
-
-
-  ####
-  # In-Memory Stores
-  ##########
-
-  # Install Memcached
-  # config.vm.provision "shell", path: "#{github_url}/scripts/memcached.sh"
-
-  # Provision Redis (without journaling and persistence)
-  # config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh"
-
-  # Provision Redis (with journaling and persistence)
-  # config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh", args: "persistent"
-  # NOTE: It is safe to run this to add persistence even if originally provisioned without persistence
-
-
-  ####
-  # Utility (queue)
-  ##########
-
-  # Install Beanstalkd
-  # config.vm.provision "shell", path: "#{github_url}/scripts/beanstalkd.sh"
-
-  # Install Heroku Toolbelt
-  # config.vm.provision "shell", path: "https://toolbelt.heroku.com/install-ubuntu.sh"
-
-  # Install Supervisord
-  # config.vm.provision "shell", path: "#{github_url}/scripts/supervisord.sh"
-
-  # Install ØMQ
-  # config.vm.provision "shell", path: "#{github_url}/scripts/zeromq.sh"
-
-  ####
-  # Additional Languages
-  ##########
-
-  # Install Nodejs
-  # config.vm.provision "shell", path: "#{github_url}/scripts/nodejs.sh", privileged: false, args: nodejs_packages.unshift(nodejs_version, github_url)
-
-  # Install Ruby Version Manager (RVM)
-  # config.vm.provision "shell", path: "#{github_url}/scripts/rvm.sh", privileged: false, args: ruby_gems.unshift(ruby_version)
 
   ####
   # Frameworks and Tooling
@@ -289,27 +160,5 @@ Vagrant.configure("2") do |config|
 
   # Provision Composer
   config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
-
-  # Provision Laravel
-  # config.vm.provision "shell", path: "#{github_url}/scripts/laravel.sh", privileged: false, args: [server_ip, laravel_root_folder, public_folder, laravel_version]
-
-  # Provision Symfony
-  # config.vm.provision "shell", path: "#{github_url}/scripts/symfony.sh", privileged: false, args: [server_ip, symfony_root_folder, public_folder]
-
-  # Install Screen
-  # config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"
-
-  # Install Mailcatcher
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mailcatcher.sh"
-
-  # Install git-ftp
-  # config.vm.provision "shell", path: "#{github_url}/scripts/git-ftp.sh", privileged: false
-
-  ####
-  # Local Scripts
-  # Any local scripts you may want to run post-provisioning.
-  # Add these to the same directory as the Vagrantfile.
-  ##########
-  # config.vm.provision "shell", path: "./post-provisioning.sh"
 
 end
